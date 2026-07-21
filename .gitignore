@@ -1,0 +1,50 @@
+# Codex / agent local metadata
+.agents/
+.codex/
+
+# ROS 2 / colcon
+build/
+install/
+log/
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Runtime data
+bags/*
+!bags/.gitkeep
+logs/*
+!logs/.gitkeep
+*.bag
+*.db3
+*.mcap
+
+# PX4 generated files
+*.ulg
+*.px4
+*.bin
+
+# Gazebo / simulation cache
+.gazebo/
+.gz/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# C/C++
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# OS
+.DS_Store
+Thumbs.db
