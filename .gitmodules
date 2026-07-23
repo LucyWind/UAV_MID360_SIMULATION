@@ -7,3 +7,6 @@
 [submodule "ros2_ws/src/livox_sim_gpu_ros2"]
     path = ros2_ws/src/livox_sim_gpu_ros2
     url = git@github.com:LucyWind/livox_gazebo_ros2_gpu_simulation.git
+[submodule "third_party/Micro-XRCE-DDS-Agent"]
+	path = third_party/Micro-XRCE-DDS-Agent
+    url = git@github.com:eProsima/Micro-XRCE-DDS-Agent.git
