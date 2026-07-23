@@ -10,3 +10,11 @@
 [submodule "third_party/Micro-XRCE-DDS-Agent"]
 	path = third_party/Micro-XRCE-DDS-Agent
     url = git@github.com:eProsima/Micro-XRCE-DDS-Agent.git
+[submodule "ros2_ws/src/FAST_LIO"]
+	path = ros2_ws/src/FAST_LIO
+	url = https://github.com/hku-mars/FAST_LIO.git
+	branch = ROS2
+[submodule "ros2_ws/src/livox_ros_driver2"]
+	path = ros2_ws/src/livox_ros_driver2
+	url = https://github.com/Livox-SDK/livox_ros_driver2.git
+	branch = master
