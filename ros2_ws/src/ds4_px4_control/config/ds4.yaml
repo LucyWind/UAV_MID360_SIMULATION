@@ -1,0 +1,38 @@
+ds4_position_control:
+  ros__parameters:
+    # Control loop and input shaping
+    rate_hz: 20.0
+    deadzone: 0.08
+    joy_timeout: 0.5
+    prestream_duration: 1.0
+
+    # Stick commands are integrated as target velocities.
+    max_xy_speed: 2.0       # m/s
+    max_z_speed: 1.0        # m/s
+    max_yaw_rate: 1.0       # rad/s
+    body_frame_xy: true
+    frame_id: "map"
+    mavros_namespace: "/mavros"
+
+    # Maximum target displacement from the point where CROSS was pressed.
+    max_horizontal_offset: 20.0
+    max_vertical_offset: 10.0
+
+    # Common ROS 2 joy_node mapping for a DualShock 4.
+    # Verify with: ros2 topic echo /joy
+    # American hand / Mode 2:
+    # left X=yaw, left Y=altitude, right X=lateral, right Y=forward.
+    axis_yaw: 0
+    axis_up: 1
+    axis_right: 3
+    axis_forward: 4
+    sign_yaw: 1.0
+    sign_up: 1.0
+    sign_right: -1.0
+    sign_forward: 1.0
+
+    # CROSS=1, CIRCLE=2, TRIANGLE=3, L1=4 on the common mapping.
+    button_activate: 1
+    button_land: 2
+    button_hold_here: 3
+    button_deadman: 4

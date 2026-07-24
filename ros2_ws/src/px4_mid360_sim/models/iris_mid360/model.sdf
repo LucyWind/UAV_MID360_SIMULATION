@@ -510,7 +510,7 @@
     <!-- Livox MID360 link -->
     <link name="mid360_link">
       <!-- 相对于 Iris 模型坐标系的位置 -->
-      <pose>0 0 0.15 0 0 0</pose>
+      <pose>0.1 0 0.07 0 0.523599 0</pose>
 
       <inertial>
         <mass>0.4</mass>
@@ -526,29 +526,14 @@
         </inertia>
       </inertial>
 
-      <!-- 可视模型 -->
-      <!-- <visual name="mid360_visual">
+      <!-- 可视模型：网格随模型一起发布，避免 Gazebo 无法解析 ROS package:// URI -->
+      <visual name="mid360_visual">
+        <pose>0 0 0 0 0 3.141592653589793</pose>
         <geometry>
           <mesh>
-            <uri>
-              package://livox_gazebo_ros2_gpu_simulation/meshes/mid-360-scaled.dae
-            </uri>
+            <uri>model://iris_mid360/meshes/mid-360-scaled.dae</uri>
           </mesh>
         </geometry>
-      </visual> -->
-
-      <!-- 可视模型 -->
-      <visual name="mid360_visual">
-        <geometry>
-          <box>
-            <size>0.10 0.06 0.06</size>
-          </box>
-        </geometry>
-
-        <material>
-          <ambient>0.1 0.1 0.1 1</ambient>
-          <diffuse>0.2 0.2 0.2 1</diffuse>
-        </material>
       </visual>
 
       <!-- 碰撞模型 -->
