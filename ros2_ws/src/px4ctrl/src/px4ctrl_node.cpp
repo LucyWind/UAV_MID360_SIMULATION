@@ -1,7 +1,5 @@
 #include "px4ctrl_node.h"
 
-#define TEST_OPEN 0 // 0: 不测试，1: 测试
-
 // 信号处理函数，用于优雅地处理Ctrl+C等终止信号
 void mySigintHandler(int sig)
 {
@@ -28,54 +26,6 @@ int main(int argc, char **argv)
     // 初始化控制器和状态机(最后再解决)
     LinearControl controller(param, node);  // 创建线性控制器实例
     PX4CtrlFSM fsm(param, controller, node);  // 创建状态机实例
-    #if TEST_OPEN
-        // 创建测试类实例
-        Test test(node);
-
-        // 1. 订阅飞控状态信息
-        auto state_sub = node->create_subscription<mavros_msgs::msg::State>(
-            "/mavros/state", 10,
-            std::bind(&Test::stateCallback, &test, std::placeholders::_1));
-
-        // 2. 订阅扩展状态信息
-        auto extended_state_sub = node->create_subscription<mavros_msgs::msg::ExtendedState>(
-            "/mavros/extended_state", 10,
-            std::bind(&Test::extendedStateCallback, &test, std::placeholders::_1));
-
-        // 3. 订阅里程计信息
-        auto odom_sub = node->create_subscription<nav_msgs::msg::Odometry>(
-            "odom", rclcpp::QoS(100).reliable().best_effort(),
-            std::bind(&Test::odomCallback, &test, std::placeholders::_1));
-
-        //4. 订阅位置指令
-        auto cmd_sub = node->create_subscription<quadrotor_msgs::msg::PositionCommand>(
-            "cmd", rclcpp::QoS(100).reliable().best_effort(),
-            std::bind(&Test::cmdCallback, &test, std::placeholders::_1));
-
-        // 5. 订阅IMU数据
-        auto imu_sub = node->create_subscription<sensor_msgs::msg::Imu>(
-            "/mavros/imu/data", rclcpp::QoS(100).reliable().best_effort(),
-            std::bind(&Test::imuCallback, &test, std::placeholders::_1));
-
-        // 6. 订阅遥控器数据（如果启用）
-        rclcpp::Subscription<mavros_msgs::msg::RCIn>::SharedPtr rc_sub;
-        if (!param.takeoff_land.no_RC)
-        {
-            rc_sub = node->create_subscription<mavros_msgs::msg::RCIn>(
-                "/mavros/rc/in", 10,
-                std::bind(&Test::rcCallback, &test, std::placeholders::_1));
-        }
-
-        // 7. 订阅电池状态
-        auto bat_sub = node->create_subscription<sensor_msgs::msg::BatteryState>(
-            "/mavros/battery", rclcpp::QoS(100).reliable().best_effort(),
-            std::bind(&Test::batteryCallback, &test, std::placeholders::_1));
-
-        // 8. 订阅起飞降落命令
-        auto takeoff_land_sub = node->create_subscription<quadrotor_msgs::msg::TakeoffLand>(
-            "takeoff_land", rclcpp::QoS(100).reliable().best_effort(),
-            std::bind(&Test::takeoffLandCallback, &test, std::placeholders::_1));
-    #elif TEST_OPEN == 0
         // 1. 订阅飞控状态信息（仅接受状态）
         auto state_sub = node->create_subscription<mavros_msgs::msg::State>(
             "/mavros/state", 10,
@@ -119,7 +69,6 @@ int main(int argc, char **argv)
         auto takeoff_land_sub = node->create_subscription<quadrotor_msgs::msg::TakeoffLand>(
             "takeoff_land", rclcpp::QoS(100).reliable().best_effort(),
             std::bind(&Takeoff_Land_Data_t::feed, &fsm.takeoff_land_data, std::placeholders::_1));
-    #endif // TEST_OPEN
 
     // 创建 best effort QoS profile
     auto best_effort_qos = rclcpp::QoS(10).best_effort().durability_volatile();

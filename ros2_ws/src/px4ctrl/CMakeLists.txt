@@ -62,11 +62,11 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# # 安装启动文件
-# install(DIRECTORY
-#   launch
-#   config
-#   DESTINATION share/${PROJECT_NAME}
-# )
+# 安装启动文件
+install(DIRECTORY
+  launch
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_package()
