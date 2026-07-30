@@ -550,7 +550,7 @@
         <pose>0 0 0 0 0 0</pose>
 
         <visualize>false</visualize>
-        <update_rate>10</update_rate>
+        <update_rate>100</update_rate>
 
         <ray>
           <scan>
@@ -591,9 +591,6 @@
           <frameName>mid360_link</frameName>
           <samples>20000</samples>
           <downsample>1</downsample>
-          <!-- Allowed values: pointcloud2, livox_custom -->
-          <output_type>livox_custom</output_type>
-          <lidar_id>0</lidar_id>
 
           <csv_file_name>
             package://livox_gazebo_ros2_gpu_simulation/scan_mode/mid360.csv

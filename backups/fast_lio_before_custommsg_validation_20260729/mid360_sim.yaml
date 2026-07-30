@@ -1,0 +1,137 @@
+/**:
+    ros__parameters:
+        # ==================== FAST-LIO 全局参数 ====================
+        # 是否启用传统的边缘/平面特征提取。
+        # false 表示使用 FAST-LIO2 的直接点云配准方式。
+        feature_extract_enable: false
+
+        # 点云预处理降采样步长：每 point_filter_num 个点保留一个。
+        # 设为 1 表示不进行这种按序抽点。
+        point_filter_num: 1
+
+        # 每帧扫描与地图匹配时，迭代卡尔曼滤波器的最大迭代次数。
+        max_iteration: 3
+
+        # 当前帧平面点云的体素滤波尺寸，单位：m。
+        # 数值越小，保留的点越多，精度和计算量通常都会提高。
+        filter_size_surf: 0.1
+
+        # 增量地图点云的体素滤波尺寸，单位：m。
+        filter_size_map: 0.2
+
+        # ikd-Tree 局部地图立方体的边长，单位：m。
+        cube_side_length: 1000.0
+
+        # 是否记录运行过程中的位姿和耗时日志。
+        runtime_pos_log_enable: false
+
+        # 地图文件路径预留参数；相对路径以节点启动时的工作目录为基准。
+        map_file_path: "./test.pcd"
+
+        # ==================== 输入话题与时间同步 ====================
+        common:
+            # 仿真 Mid-360 点云话题。
+            lid_topic: "/mid360"
+
+            # MAVROS 发布的原始 IMU 话题。
+            imu_topic: "/mavros/imu/data_raw"
+
+            # 是否启用 FAST-LIO 内部的简易软时间同步。
+            # 已有可靠硬件/仿真时间同步时应保持 false。
+            time_sync_en: false
+
+            # LiDAR 时间戳相对 IMU 时间戳的固定补偿量，单位：s。
+            # 此参数无论 time_sync_en 是否开启都会生效；未知时保持 0.0。
+            time_offset_lidar_to_imu: 0.0
+
+        # ==================== 点云预处理 ====================
+        preprocess:
+            # LiDAR 类型：1=Livox Avia，2=Velodyne，3=Ouster，4=Mid-360。
+            lidar_type: 4
+
+            # LiDAR 扫描线数；当前 Mid-360 仿真输入按 4 线配置处理。
+            scan_line: 4
+
+            # 近距离盲区半径，单位：m；距离雷达小于该值的点会被剔除。
+            blind: 0.4
+
+            # PointCloud2 中单点时间字段的单位：
+            # 0=s，1=ms，2=us，3=ns。
+            timestamp_unit: 3
+
+            # LiDAR 扫描频率，单位：Hz。
+            scan_rate: 100
+
+        # ==================== LIO 建图与状态估计 ====================
+        mapping:
+            # 加速度计测量噪声协方差。
+            acc_cov: 0.1
+
+            # 陀螺仪测量噪声协方差。
+            gyr_cov: 0.1
+
+            # 加速度计零偏随机游走协方差。
+            b_acc_cov: 0.0001
+
+            # 陀螺仪零偏随机游走协方差。
+            b_gyr_cov: 0.0001
+
+            # LiDAR 水平视场角，单位：deg。
+            fov_degree: 360.0
+
+            # 用于配准和局部地图维护的最大探测距离，单位：m。
+            det_range: 100.0
+
+            # 是否在线估计 LiDAR 到 IMU 的外参。
+            # 已知且可信的外参通常建议设为 false，以保持外参固定。
+            extrinsic_est_en: true
+
+            # LiDAR 原点在 IMU 坐标系中的平移 [x, y, z]，单位：m。
+            extrinsic_T: [0.1, 0.0, 0.05]
+
+            # LiDAR 坐标系到 IMU 坐标系的旋转矩阵 R_I_L，按行展开。
+            # 点坐标转换关系为：p_I = R_I_L * p_L + T_I_L。
+
+            extrinsic_R: [ 0.8660254, 0.0, 0.5,
+                           0.0,       1.0, 0.0,
+                          -0.5,       0.0, 0.8660254 ]
+            # extrinsic_R: [ 0.76606482, 0.0, 0.64276333,
+            #                0.0,        1.0, 0.0,
+            #               -0.64276333, 0.0, 0.76606482 ]
+
+            # 无外参旋转和平移时可使用下面的单位外参配置。
+            # extrinsic_T: [0.0, 0.0, 0.0]
+            # extrinsic_R: [ 1.0, 0.0, 0.0,
+            #                0.0, 1.0, 0.0,
+            #                0.0, 0.0, 1.0 ]
+
+        # ==================== ROS 话题发布开关 ====================
+        publish:
+            # 发布轨迹 /path。
+            path_en: true
+
+            # 发布参与本帧滤波更新的有效点 /cloud_effected。
+            effect_map_en: false
+
+            # 发布增量地图点云 /Laser_map。
+            map_en: true
+
+            # 发布世界坐标系下的配准点云 /cloud_registered。
+            # 设为 false 会关闭主要点云输出。
+            scan_publish_en: true
+
+            # 是否发布未经体素降采样的稠密配准点云。
+            # false 使用降采样后的点云，可降低带宽和计算负担。
+            dense_publish_en: true
+
+            # 发布 IMU 机体坐标系下的点云 /cloud_registered_body。
+            scan_bodyframe_pub_en: true
+
+        # ==================== PCD 地图保存 ====================
+        pcd_save:
+            # 是否累计全局点云并保存为 PCD 文件。
+            pcd_save_en: false
+
+            # 每个 PCD 文件包含的 LiDAR 帧数。
+            # -1 表示所有帧写入同一个文件，长时间运行可能占用大量内存。
+            interval: -1
