@@ -38,17 +38,17 @@ int main(int argc, char **argv)
 
         // 3. 订阅里程计信息（接受里程计数据后提取并检查频率）
         auto odom_sub = node->create_subscription<nav_msgs::msg::Odometry>(
-            "odom", rclcpp::QoS(100).reliable().best_effort(),
+            "odom", rclcpp::QoS(1).reliable().best_effort(),
             std::bind(&Odom_Data_t::feed, &fsm.odom_data, std::placeholders::_1));
 
         //4. 订阅位置指令
         auto cmd_sub = node->create_subscription<quadrotor_msgs::msg::PositionCommand>(
-            "cmd", rclcpp::QoS(100).reliable().best_effort(),
+            "cmd", rclcpp::QoS(1).reliable().best_effort(),
             std::bind(&Command_Data_t::feed, &fsm.cmd_data, std::placeholders::_1));
 
         // 5. 订阅IMU数据
         auto imu_sub = node->create_subscription<sensor_msgs::msg::Imu>(
-            "/mavros/imu/data", rclcpp::QoS(100).reliable().best_effort(),
+            "/mavros/imu/data", rclcpp::QoS(1).reliable().best_effort(),
             std::bind(&Imu_Data_t::feed, &fsm.imu_data, std::placeholders::_1));
 
         // 6. 订阅遥控器数据（如果启用）

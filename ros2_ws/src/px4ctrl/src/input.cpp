@@ -167,20 +167,6 @@ void Odom_Data_t::feed(const nav_msgs::msg::Odometry::SharedPtr pMsg)
     if (count++ % 500 == 0)
         ROS_WARN("VEL_IN_BODY!!!");
 #endif
-
-    // 检查频率
-    static int one_min_count = 9999;
-    static rclcpp::Time last_clear_count_time = node_->now();
-    if ( (now - last_clear_count_time).seconds() > 1.0 )
-    {
-        if ( one_min_count < 100 )
-        {
-            RCLCPP_WARN(node_->get_logger(), "ODOM frequency seems lower than 100Hz, which is too low!");
-        }
-        one_min_count = 0;
-        last_clear_count_time = now;
-    }
-    one_min_count++;
 }
 
 //构造函数3-----------------------------------------------------------
@@ -210,21 +196,6 @@ void Imu_Data_t::feed(const sensor_msgs::msg::Imu::SharedPtr pMsg)
     q.y() = msg.orientation.y;
     q.z() = msg.orientation.z;
     q.w() = msg.orientation.w;
-
-    // check the frequency
-    static int one_min_count = 9999;
-    static rclcpp::Time last_clear_count_time = node_->now();;
-    if ( (now - last_clear_count_time).seconds() > 1.0 )
-    {
-        if ( one_min_count < 100 )
-        {
-            //要求低于10ms才采样速度
-            RCLCPP_WARN(node_->get_logger(), "IMU frequency seems lower than 100Hz, which is too low!");
-        }
-        one_min_count = 0;
-        last_clear_count_time = now;
-    }
-    one_min_count++;
 }
 
 State_Data_t::State_Data_t(

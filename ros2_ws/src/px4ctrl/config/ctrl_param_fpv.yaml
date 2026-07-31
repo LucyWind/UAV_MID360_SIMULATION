@@ -25,8 +25,8 @@
         enable: true                 # 启用自动起降功能
         enable_auto_arm: true        # 启用自动解锁功能
         no_RC: true                 # 是否允许无遥控器操作
-        takeoff_height: 0.5          # 自动起飞目标高度(m)
-        takeoff_land_speed: 0.3      # 起降速度(m/s)
+        takeoff_height: 1.0          # 自动起飞目标高度(m)
+        takeoff_land_speed: 0.2      # 起降速度(m/s)
 
     # 推力模型参数
     # 推力信号u(0~1)到实际推力F(N)的映射模型: F=K1*Voltage^K2*(K3*u^2+(1-K3)*u)
@@ -38,7 +38,7 @@
         K2: 1.6942                   # 需要精确校准!电压影响系数K2
         K3: 0.6786                   # 需要精确校准!等同于PX4中的THR_MDL_FAC参数
         # 近似推力映射参数
-        hover_percentage: 0.30        # 自稳/特技模式下的悬停推力百分比
+        hover_percentage: 0.79        # 自稳/特技模式下的悬停推力百分比
 
     # 控制器增益参数
     gain: 
