@@ -553,7 +553,6 @@ Desired_State_t PX4CtrlFSM::get_hover_des()
 	des.p = hover_pose.head<3>();
 	des.v = Eigen::Vector3d::Zero();
 	des.a = Eigen::Vector3d::Zero();
-	des.j = Eigen::Vector3d::Zero();
 	des.yaw = hover_pose(3);
 	des.yaw_rate = 0.0;
 
@@ -566,7 +565,6 @@ Desired_State_t PX4CtrlFSM::get_cmd_des()
 	des.p = cmd_data.p;
 	des.v = cmd_data.v;
 	des.a = cmd_data.a;
-	des.j = cmd_data.j;
 	des.yaw = cmd_data.yaw;
 	des.yaw_rate = cmd_data.yaw_rate;
 
@@ -587,7 +585,6 @@ Desired_State_t PX4CtrlFSM::get_rotor_speed_up_des(const rclcpp::Time now)
 	des.p = takeoff_land.start_pose.head<3>();
 	des.v = Eigen::Vector3d::Zero();
 	des.a = Eigen::Vector3d(0, 0, des_a_z);
-	des.j = Eigen::Vector3d::Zero();
 	des.yaw = takeoff_land.start_pose(3);
 	des.yaw_rate = 0.0;
 
@@ -606,7 +603,6 @@ Desired_State_t PX4CtrlFSM::get_takeoff_land_des(const double speed)
 	des.p = takeoff_land.start_pose.head<3>() + Eigen::Vector3d(0, 0, speed * delta_t);
 	des.v = Eigen::Vector3d(0, 0, speed);
 	des.a = Eigen::Vector3d::Zero();
-	des.j = Eigen::Vector3d::Zero();
 	des.yaw = takeoff_land.start_pose(3);
 	des.yaw_rate = 0.0;
 

@@ -233,21 +233,17 @@ void Command_Data_t::feed(const quadrotor_msgs::msg::PositionCommand::SharedPtr 
     msg = *pMsg;
     rcv_stamp = node_->now();
 
-    p(0) = msg.pos.x;
-    p(1) = msg.pos.y;
-    p(2) = msg.pos.z;
+    p(0) = msg.position.x;
+    p(1) = msg.position.y;
+    p(2) = msg.position.z;
 
-    v(0) = msg.vel.x;
-    v(1) = msg.vel.y;
-    v(2) = msg.vel.z;
+    v(0) = msg.velocity.x;
+    v(1) = msg.velocity.y;
+    v(2) = msg.velocity.z;
 
-    a(0) = msg.acc.x;
-    a(1) = msg.acc.y;
-    a(2) = msg.acc.z;
-
-    j(0) = msg.jerk.x;
-    j(1) = msg.jerk.y;
-    j(2) = msg.jerk.z;
+    a(0) = msg.acceleration.x;
+    a(1) = msg.acceleration.y;
+    a(2) = msg.acceleration.z;
 
     // std::cout << "j1=" << j.transpose() << std::endl;
 

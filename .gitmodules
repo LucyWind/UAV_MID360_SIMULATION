@@ -26,3 +26,6 @@
     path = ros2_ws/src/px4_msgs
     url = git@github.com:LucyWind/px4_msgs.git
     branch = px4ctrl-compatible
+[submodule "ros2_ws/src/ego-planner-swarm"]
+	path = ros2_ws/src/ego-planner-swarm
+	url = git@github.com:LucyWind/ego-planner-swarm.git

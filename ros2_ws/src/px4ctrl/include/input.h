@@ -149,7 +149,6 @@ public:
   Eigen::Vector3d p;               // 位置命令
   Eigen::Vector3d v;               // 速度命令
   Eigen::Vector3d a;               // 加速度命令
-  Eigen::Vector3d j;               // 加加速度命令
   double yaw;                      // 偏航角命令
   double yaw_rate;                 // 偏航角速度命令
 

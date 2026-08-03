@@ -1,17 +1,11 @@
 std_msgs/Header header
-
-geometry_msgs/Vector3 pos
-geometry_msgs/Vector3 vel
-geometry_msgs/Vector3 acc
-geometry_msgs/Vector3 jerk
-
-float32[3] heading
-
+geometry_msgs/Point position
+geometry_msgs/Vector3 velocity
+geometry_msgs/Vector3 acceleration
 float64 yaw
 float64 yaw_dot
-
 float64[3] kx
-float64[3] kv
+float64[3] kv 
 
 uint32 trajectory_id
 
